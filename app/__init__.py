@@ -3,17 +3,17 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 
-app = Flask(__name__)
+blog = Flask(__name__)
 
 if __name__ == '__main__':
-    app.run()
+    blog.run()
 
-app.config['SECRET_KEY'] = 'SECRET_KEY'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+blog.config['SECRET_KEY'] = 'SECRET_KEY'
+blog.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 
-db = SQLAlchemy(app)
-bcrypt = Bcrypt(app)
-login_manager = LoginManager(app)
+db = SQLAlchemy(blog)
+bcrypt = Bcrypt(blog)
+login_manager = LoginManager(blog)
 login_manager.login_view = 'login'
 login_manager.login_message_category = 'info'
 

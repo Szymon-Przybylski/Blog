@@ -2,25 +2,25 @@ import os
 import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort
-from app import app, db, bcrypt
+from app import blog, db, bcrypt
 from app.forms import RegistrationForm, LoginForm, UpdateAccountForm, PostForm
 from app.models import User, Post
 from flask_login import login_user, current_user, logout_user, login_required
 
 
-@app.route("/")
-@app.route("/home")
+@blog.route("/")
+@blog.route("/home")
 def home():
     posts = Post.query.all()
     return render_template('home.html', posts=posts)
 
 
-@app.route("/about")
+@blog.route("/about")
 def about():
     return render_template('about.html', title='About')
 
 
-@app.route("/register", methods=['GET', 'POST'])
+@blog.route("/register", methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
@@ -35,7 +35,7 @@ def register():
     return render_template('register.html', title='Register', form=form)
 
 
-@app.route("/login", methods=['GET', 'POST'])
+@blog.route("/login", methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
@@ -51,7 +51,7 @@ def login():
     return render_template('login.html', title='Login', form=form)
 
 
-@app.route("/logout")
+@blog.route("/logout")
 def logout():
     logout_user()
     return redirect(url_for('home'))
@@ -71,7 +71,7 @@ def save_picture(form_picture):
     return picture_fn
 
 
-@app.route("/account", methods=['GET', 'POST'])
+@blog.route("/account", methods=['GET', 'POST'])
 @login_required
 def account():
     form = UpdateAccountForm()
@@ -92,7 +92,7 @@ def account():
                            image_file=image_file, form=form)
 
 
-@app.route("/post/new", methods=['GET', 'POST'])
+@blog.route("/post/new", methods=['GET', 'POST'])
 @login_required
 def new_post():
     form = PostForm()
@@ -106,13 +106,13 @@ def new_post():
                            form=form, legend='New Post')
 
 
-@app.route("/post/<int:post_id>")
+@blog.route("/post/<int:post_id>")
 def post(post_id):
     post = Post.query.get_or_404(post_id)
     return render_template('post.html', title=post.title, post=post)
 
 
-@app.route("/post/<int:post_id>/update", methods=['GET', 'POST'])
+@blog.route("/post/<int:post_id>/update", methods=['GET', 'POST'])
 @login_required
 def update_post(post_id):
     post = Post.query.get_or_404(post_id)
@@ -132,7 +132,7 @@ def update_post(post_id):
                            form=form, legend='Update Post')
 
 
-@app.route("/post/<int:post_id>/delete", methods=['POST'])
+@blog.route("/post/<int:post_id>/delete", methods=['POST'])
 @login_required
 def delete_post(post_id):
     post = Post.query.get_or_404(post_id)
