@@ -1,3 +1,5 @@
+import sys
+sys.path.append('/home/SzymonPrzybylski/Blog')
 import os
 import secrets
 from PIL import Image
