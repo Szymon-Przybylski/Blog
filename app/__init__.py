@@ -8,7 +8,7 @@ sys.path.append('/home/SzymonPrzybylski/Blog')
 blog = Flask(__name__)
 
 #if __name__ == '__main__':
-#    blog.run()
+#   blog.run()
 
 blog.config['SECRET_KEY'] = 'SECRET_KEY'
 blog.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
